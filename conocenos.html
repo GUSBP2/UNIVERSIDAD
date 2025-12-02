@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiénes Somos</title>
+
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0ea33b;
+      --accent:#0f9bd6;
+      --bg:#f6f8fb;
+      --text:#1f2937;
+      --card:#ffffff;
+      --radius:14px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:"Poppins", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* ---------------- CABECERA ---------------- */
+    header{
+      background:linear-gradient(90deg,var(--primary),var(--accent));
+      color:white;
+      padding:24px 16px;
+      text-align:center;
+    }
+    header h1{
+      font-size:30px;
+      font-weight:800;
+    }
+    header p{
+      font-size:16px;
+      opacity:0.9;
+    }
+
+    /* ---------------- MENÚ ---------------- */
+    nav{
+  display:flex;
+  justify-content:center;   /* CENTRA EL MENÚ */
+  align-items:center;
+  gap:14px;
+  padding:12px 16px;
+  background:white;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  flex-wrap:wrap;            /* PERMITE AJUSTE EN CELULAR */
+}
+
+nav::-webkit-scrollbar{
+  display:none;
+}
+
+.tab{
+  background:white;
+  padding:10px 18px;
+  border-radius:12px;
+  white-space:nowrap;
+  box-shadow:0 1px 4px rgba(0,0,0,0.12);
+  font-weight:600;
+  text-decoration:none;
+  color:var(--text);
+  font-size:15px;
+}
+
+.tab:hover{
+  background:var(--primary);
+  color:white;
+  transition:0.3s;
+}
+
+
+    .tab{
+      background:white;
+      padding:10px 16px;
+      border-radius:12px;
+      white-space:nowrap;
+      box-shadow:0 1px 4px rgba(0,0,0,0.12);
+      font-weight:600;
+      text-decoration:none;
+      color:var(--text);
+      flex-shrink:0;
+    }
+    .tab:hover{
+      background:var(--primary);
+      color:white;
+      transition:0.3s;
+    }
+
+    /* ---------------- BANNERS LATERALES ---------------- */
+
+    .banner-left, .banner-right{
+      position:fixed;
+      top:0;
+      width:160px;
+      height:100vh;
+      background-size:cover;
+      background-position:center;
+      z-index:-1;
+      opacity:0.95;
+      transition:background-image 1s ease-in-out;
+      border-left:4px solid rgba(0,0,0,0.3);
+      border-right:4px solid rgba(0,0,0,0.3);
+    }
+
+    .banner-left{ left:0; }
+    .banner-right{ right:0; }
+
+    /* ---------------- CONTENIDO ---------------- */
+    .content{
+      max-width:900px;
+      margin:40px auto;
+      background:var(--card);
+      padding:30px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 20px rgba(0,0,0,0.07);
+      position:relative;
+      z-index:2;
+    }
+
+    h2{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:20px;
+      font-weight:800;
+      color:#0f4c81;
+    }
+
+    .section{
+      margin-bottom:26px;
+    }
+    .section h3{
+      font-size:22px;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+    .section p{
+      font-size:16px;
+      line-height:1.7;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    /* TABLETS: Reducimos tamaño del banner */
+    @media(max-width:1200px){
+      .banner-left, .banner-right{
+        width:120px;
+      }
+    }
+
+    /* CELULARES: Quitamos banners por espacio */
+    @media(max-width:900px){
+      .banner-left, .banner-right{
+        display:none !important;
+      }
+      .content{
+        margin:20px 14px;
+        padding:22px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA -->
+  <header>
+    <h1>Quiénes Somos</h1>
+    <p>Conoce más sobre nuestra misión y valores</p>
+  </header>
+
+  <!-- MENÚ -->
+  <nav>
+    <a class="tab" href="index.html">🏠 Inicio</a>
+    <a class="tab" href="escuelas.html">🏫 Escuelas</a>
+    <a class="tab" href="contacto.html">📞 Contacto</a>
+    <a class="tab" href="buzon.html">📩 Buzón</a>
+  </nav>
+
+  <!-- BANNERS VERTICALES -->
+  <div class="banner-left" id="bannerLeft"></div>
+  <div class="banner-right" id="bannerRight"></div>
+
+  <!-- CONTENIDO -->
+  <main class="content">
+    <h2>Quiénes Somos</h2>
+
+    <div class="section">
+      <h3>Misión</h3>
+      <p>
+        Somos una organización dedicada a brindar servicios de calidad,
+        comprometidos con la excelencia y la mejora continua.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Visión</h3>
+      <p>
+        Ser un referente en nuestro sector, destacándonos por la innovación,
+        el profesionalismo y la atención personalizada a cada uno de nuestros usuarios.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Valores</h3>
+      <p>
+        Nuestro trabajo se fundamenta en la responsabilidad, respeto, transparencia
+        y dedicación, buscando siempre superar las expectativas.
+      </p>
+    </div>
+  </main>
+
+  <!-- SCRIPT PARA CAMBIO DE BANNERS -->
+  <script>
+    const images = [
+      "img/banner1.jpg",
+      "img/banner2.jpg",
+      "img/banner3.jpg"
+    ];
+
+    let index = 0;
+
+    function changeBanners(){
+      document.getElementById("bannerLeft").style.backgroundImage = `url(${images[index]})`;
+      document.getElementById("bannerRight").style.backgroundImage = `url(${images[index]})`;
+      index = (index + 1) % images.length;
+    }
+
+    changeBanners(); 
+    setInterval(changeBanners, 3000);
+  </script>
+
+</body>
+</html>

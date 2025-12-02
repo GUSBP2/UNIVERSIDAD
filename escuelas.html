@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escuelas</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0ea33b;
+      --accent:#0f9bd6;
+      --bg:#f6f8fb;
+      --text:#1f2937;
+      --card:#ffffff;
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Poppins", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* ---------------- MENÚ SUPERIOR ---------------- */
+    header{
+      background:linear-gradient(90deg,var(--primary),var(--accent));
+      color:white;
+      padding:22px 16px;
+      text-align:center;
+    }
+    header h1{margin:0 0 4px;font-size:28px;font-weight:800;}
+    header p{margin:0;font-size:15px;}
+
+   nav{
+  display:flex;
+  justify-content:center;   /* CENTRA EL MENÚ */
+  align-items:center;
+  gap:14px;
+  padding:12px 16px;
+  background:white;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  flex-wrap:wrap;            /* PERMITE AJUSTE EN CELULAR */
+}
+
+nav::-webkit-scrollbar{
+  display:none;
+}
+
+    .tab{
+      background:white;
+      padding:10px 14px;
+      border-radius:12px;
+      white-space:nowrap;
+      box-shadow:0 1px 4px rgba(2,6,23,0.12);
+      font-weight:600;
+      text-decoration:none;
+      color:var(--text);
+      flex-shrink:0;
+      font-size:14px;
+    }
+    .tab:hover{
+      background:var(--primary);
+      color:white;
+      transition:0.3s;
+    }
+
+    /* ---------------- BANNERS VERTICALES ---------------- */
+
+    .banner-left, .banner-right{
+      position:fixed;
+      top:0;
+      width:140px;
+      height:100vh;
+      background-size:cover;
+      background-position:center;
+      z-index:-1;
+      opacity:0.85;
+      transition:background-image 1s ease-in-out;
+    }
+    .banner-left{left:0;}
+    .banner-right{right:0;}
+
+    /* ---------------- CONTENIDO ---------------- */
+    .content{
+      max-width:900px;
+      margin:40px auto;
+      background:var(--card);
+      padding:30px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 20px rgba(0,0,0,0.07);
+    }
+
+    h2{
+      text-align:center;
+      font-size:36px;
+      margin-bottom:20px;
+      font-weight:800;
+      color:#0f4c81;
+    }
+
+    .section{
+      margin-bottom:26px;
+    }
+    .section h3{
+      font-size:22px;
+      margin-bottom:10px;
+      font-weight:700;
+      color:var(--primary);
+    }
+    .section p{
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    @media(max-width:900px){
+      .banner-left, .banner-right{
+        display:none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENÚ SUPERIOR -->
+  <header>
+    <h1>Escuelas</h1>
+    <p>Información educativa y universitaria</p>
+  </header>
+
+  <nav>
+    <a class="tab" href="index.html">🏠 Inicio</a>
+    <a class="tab" href="quienes.html">📘 Quiénes somos</a>
+    <a class="tab" href="escuelas.html">🏫 Escuelas</a>
+    <a class="tab" href="contacto.html">📞 Contacto</a>
+    <a class="tab" href="buzon.html">📩 Buzón</a>
+  </nav>
+
+  <!-- BANNERS VERTICALES -->
+  <div class="banner-left" id="bannerLeft"></div>
+  <div class="banner-right" id="bannerRight"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="content">
+    <h2>Universidad y Educacion
+    </h2>
+
+    <div class="section">
+      <h3>Que es nuestra universidad</h3>
+      <p>
+        Una universidad es una institución de educación superior dedicada a la formación profesional,
+        investigación científica y desarrollo integral de los estudiantes. 
+        Su objetivo es preparar a las personas con conocimientos, habilidades y valores
+        para desempeñarse en el mundo laboral y contribuir al avance de la sociedad.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>¿Cuál es la función de una Universidad?</h3>
+      <p>
+        Las universidades cumplen funciones esenciales como:
+        <br><br>
+        • Impartir educación superior de calidad.<br>
+        • Formar profesionistas competentes y éticos.<br>
+        • Impulsar la investigación científica y tecnológica.<br>
+        • Fomentar la innovación y el desarrollo económico.<br>
+        • Contribuir al bienestar social mediante proyectos, servicios y vinculación con empresas.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Universidad Tecnológica de Nuevo Laredo (UTNL)</h3>
+      <p>
+        La <b>Universidad Tecnológica de Nuevo Laredo (UTNL)</b> es una institución pública reconocida por su 
+        modelo educativo 70% práctico y 30% teórico, diseñado para preparar a los estudiantes de forma 
+        directa para el mercado laboral.
+        <br><br>
+        La UTNL ofrece carreras enfocadas en las necesidades de la industria, tales como:
+        <br><br>
+        • Tecnologías de la Información<br>
+        • Mantenimiento Industrial<br>
+        • Procesos Industriales<br>
+        • Logística<br>
+        • Mecatrónica<br>
+        • Desarrollo de Negocios, entre otras.
+        <br><br>
+        Además, la universidad cuenta con:
+        <br><br>
+        • Laboratorios equipados<br>
+        • Vinculación con empresas del sector industrial<br>
+        • Estadías profesionales obligatorias<br>
+        • Certificaciones y programas de movilidad
+        <br><br>
+        Su misión es formar profesionistas altamente capacitados, mientras impulsa la innovación
+        y el crecimiento económico en Nuevo Laredo y la región.
+      </p>
+    </div>
+  </main>
+
+  <!-- SCRIPT PARA CAMBIO DE BANNERS -->
+  <script>
+    const images = [
+      "img/banner1.jpg",
+      "img/banner2.jpg",
+      "img/banner3.jpg"
+    ];
+
+    let index = 0;
+
+    function changeBanners(){
+      document.getElementById("bannerLeft").style.backgroundImage = `url(${images[index]})`;
+      document.getElementById("bannerRight").style.backgroundImage = `url(${images[index]})`;
+      index = (index + 1) % images.length;
+    }
+
+    changeBanners(); 
+    setInterval(changeBanners, 3000);
+  </script>
+
+</body>
+</html>

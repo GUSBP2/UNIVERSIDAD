@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Buscar Rutas - Transporte</title>
+  <style>
+    :root{
+      --primary:#378f04b0;
+      --accent:#ce1010;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#0f1720;
+      --muted:#6b7280;
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, Arial; margin:0; background:var(--bg); color:var(--text);}
+
+    header{
+      background:linear-gradient(90deg,var(--primary),#0a93d0);
+      color:#fff;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      position:sticky;
+      top:0;
+      z-index:900
+    }
+    .hamburger{font-size:26px; cursor:pointer;}
+    .brand{font-weight:800; font-size:18px}
+    .clock{margin-left:auto; font-weight:700; background:rgba(255,255,255,0.12); padding:6px 10px; border-radius:10px}
+
+    .side-banner{position:fixed; top:0; right:0; width:140px; height:100vh; overflow:hidden; border-left:6px solid rgba(0,0,0,0.04); background:#fff; z-index:100}
+    .side-banner-left{left:0; right:auto; border-left:0; border-right:6px solid rgba(0,0,0,0.04)}
+    .side-banner .slides img{width:100%; height:100%; object-fit:cover; position:absolute; opacity:0; transition:opacity .6s}
+    .side-banner .slides img.active{opacity:1}
+
+    body{padding:0 140px 40px 140px}
+    @media(max-width:900px){
+      .side-banner{display:none}
+      body{padding:0 12px}
+    }
+
+    .container{max-width:980px; margin:18px auto}
+    .card{background:var(--card); padding:18px; border-radius:var(--radius); box-shadow:0 8px 30px rgba(11,127,191,0.06)}
+
+    .search-row{display:flex; gap:10px; align-items:center}
+    .search-row input[type=text]{flex:1; padding:12px 14px; border-radius:10px; border:1px solid #e6eef8; font-size:16px}
+    .search-row button{background:var(--primary); color:#fff; border:none; padding:12px 14px; border-radius:10px; cursor:pointer; font-weight:700}
+
+    .info-box{margin-top:14px; padding:12px; border-radius:10px; background:#fbfcff; border:1px solid #eef6fb}
+
+    .results{margin-top:16px}
+    .route{padding:12px; border-radius:10px; border:1px solid #eef6fb; margin-bottom:10px; background:white}
+    .route h3{margin:0 0 6px}
+    .meta{font-size:13px; color:var(--muted)}
+
+    .map{height:320px; margin-top:16px; border-radius:10px; overflow:hidden; border:1px solid #e6eef8}
+    .map iframe{width:100%; height:100%; border:0}
+
+    .menu{position:fixed; left:0; top:0; bottom:0; width:260px; background:#fff; padding:18px; transform:translateX(-110%); transition:transform .28s; z-index:1000; box-shadow:0 30px 60px rgba(2,6,23,0.12)}
+    .menu.open{transform:translateX(0)}
+    .menu a{display:block; padding:10px 6px; color:var(--text); text-decoration:none; font-weight:600}
+
+    .overlay{position:fixed; inset:0; background:rgba(0,0,0,0.35); display:none; z-index:999}
+    .overlay.show{display:block}
+
+    footer{max-width:980px; margin:12px auto; color:var(--muted); font-size:13px; text-align:center}
+  </style>
+</head>
+<body>
+
+  <div class="menu" id="menu">
+    <strong>Menú</strong>
+    <a class="tab" href="buzon.html">📬 Buzón</a>
+    <a href="conocenos.html">📘 Quiénes somos</a>
+    <a href="escuelas.html">🏫 Escuelas</a>
+    <a href="contacto.html">📞 Contacto</a>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <header>
+    <div class="hamburger" id="hamb">☰</div>
+    <div class="brand">Rutas MX</div>
+    <div class="clock" id="clock">--:--:--</div>
+  </header>
+
+  <div class="side-banner side-banner-left" id="side-left">
+    <div class="slides"></div>
+  </div>
+  <div class="side-banner" id="side-right">
+    <div class="slides"></div>
+  </div>
+
+  <div class="container">
+    <div class="card" id="buscar">
+      <h2>Buscar rutas de transporte</h2>
+      <p class="info-box">Escribe el nombre de la ruta o una parada. Ej.: <em>Ruta 5</em> o <em>Terminal Central</em></p>
+
+      <div class="search-row">
+        <input type="text" id="q" placeholder="Escribe ruta o parada..." />
+        <button id="searchBtn">Buscar</button>
+      </div>
+
+      <div class="results" id="results">
+        <div class="meta" style="margin-top:10px">Sin resultados aún. Realiza una búsqueda.</div>
+      </div>
+
+      <div class="map">
+        <iframe id="mapFrame"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4397.584175920249!2d-99.6012461237503!3d27.463233076323373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86611900789d2717%3A0x70d52995af982d40!2sUniversidad!5e1!3m2!1sen!2smx!4v1764658913181!5m2!1sen!2smx"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>© PROTECTO SCHOOL RIDE — PROCEDIMIENTO Y TRABAJO BASE HTML.</footer>
+
+<script>
+/* ------------------ RUTAS ------------------ */
+const ROUTES = [
+  { 
+    id:'R1', 
+    name:'Ruta 1 - villas de san miguel',
+    stops:['Terminal Centra','Av. Reforma','Plaza Mayor'],
+    times:['6:30','07:00'],
+    map:"villas de san migue Nuevo Laredo"
+  },
+
+  { 
+    id:'R2',
+    name:'Ruta 2 - NUEVA ERA',
+    stops:['Terminal Norte','Parque Industrial','Universidad'],
+    times:['05:20','05:50'],
+    map:"NUEVA ERA Nuevo Laredo"
+  },
+
+  { 
+    id:'R3',
+    name:'Ruta 3 - INFONAVIT',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"INFONAVIT Nuevo Laredo"
+  },
+
+  { 
+    id:'R4',
+    name:'Ruta 4 - TORRES,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"TORRES,NUEVO LAREDO"
+  },
+
+  { 
+    id:'R5',
+    name:'Ruta 5 - TUXPAN, REVOLUCION,LOMAS , RIO VERDE, CALLE REVOLUCION,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15',],
+    map:"TUXPAN, REVOLUCION,LOMAS , RIO VERDE, CALLE REVOLUCION,NUEVO LAREDO"
+  },
+
+  { 
+    id:'R6',
+    name:'Ruta 6 - SOLIDARIDAD,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"SOLIDARIDAD,NUEVO LAREDO"
+  },
+
+  { 
+    id:'R7',
+    name:'Ruta 7 - RESERVAS, CANSECO,CAMPANARIO,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"RESERVAS, CANSECO,CAMPANARIO,NUEVO LAREDO"
+  },
+
+  { 
+    id:'R8',
+    name:'Ruta 8 - OLIVOS 1,2 Y GUERREROS DEL SOL NUEVO LAREDO',
+    stops:['OLIVOS 1,2','GUERREROS DEL SOL','UT NUEVO LAREDO'],
+    times:['06:15','07:15'],
+    map:"OLIVOS 1,2 Y GUERREROS DEL SOL NUEVO LAREDO"
+  },
+  { 
+    id:'R9',
+    name:'Ruta 9 - CENTRO,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"CENTRO,NUEVO LAREDO"
+  },
+  { 
+    id:'R10',
+    name:'Ruta 10 - SEC 80,COLORINES,VALLES DE ANAHUAc',
+    stops:['SEC 80','COLORINES','VALLES DE ANAHUAC,UT NUEVO LAREDO'],
+    times:['06:15','07:15'],
+    map:"SEC 80,COLORINES, y VALLES DE ANAHUAC"
+  },
+  { 
+    id:'R11',
+    name:'Ruta 11 - VOLUNTADES,NUEVO LAREDO',
+    stops:['voluntan','Universidad tecnologica de nuevo laredo'],
+    times:['06:15','07:15'],
+    map:"VOLUNTADES,Universidad tecnologica de nuevo laredo"
+  },
+  { 
+    id:'R12',
+    name:'Ruta 12 - KILOMETROS, COLINAS Y PALMARES,NUEVO LAREDO',
+    stops:['COLINAS','PALMARES','UT NUEVO LAREDO'],
+    times:['06:15','07:15'],
+    map:"KILOMETROS, COLINAS Y PALMARES,NUEVO LAREDO"
+  },
+  { 
+    id:'R13',
+    name:'Ruta 13 - PANCHO VILLA,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"PANCHO VILLA,NUEVO LAREDO"
+  },
+  { 
+    id:'R14',
+    name:'Ruta 14 - LA 150,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"LA 150,NUEVO LAREDO"
+  },
+  { 
+    id:'R15',
+    name:'Ruta 15 - LOS FRESNOS,NUEVO LAREDO',
+    stops:['Terminal Central','Aeropuerto','Zona Hotelera'],
+    times:['06:15','07:15'],
+    map:"LOS FRESNOS,NUEVO LAREDO"
+  },
+
+];
+
+/* ------------------ FUNCIONES ------------------ */
+
+// 🔵 Cambiar ubicación del mapa sin API KEY
+function updateMap(location){
+  const iframe = document.getElementById("mapFrame");
+  const newUrl = "https://www.google.com/maps?q=" + encodeURIComponent(location) + "&output=embed";
+  iframe.src = newUrl;
+}
+
+const qInput = document.getElementById('q');
+const resultsEl = document.getElementById('results');
+
+// 🔍 Buscar rutas
+function search(query){
+  query = (query||'').trim().toLowerCase();
+  if(!query){
+    resultsEl.innerHTML = '<div class="meta">Escribe algo para buscar.</div>';
+    return;
+  }
+
+  const matches = ROUTES.filter(r=> 
+    r.name.toLowerCase().includes(query) || 
+    r.id.toLowerCase()===query ||
+    r.stops.some(s=> s.toLowerCase().includes(query))
+  );
+
+  if(matches.length===0){
+    resultsEl.innerHTML = '<div class="meta">No se encontraron rutas coincidentes.</div>';
+    return;
+  }
+
+  resultsEl.innerHTML = '';
+  matches.forEach(r=>{
+    const div = document.createElement('div');
+    div.className = 'route';
+    div.innerHTML = `
+      <h3>${r.name} <small class="meta">(${r.id})</small></h3>
+      <div class="meta">Paradas: ${r.stops.join(' · ')}</div>
+    `;
+    resultsEl.appendChild(div);
+  });
+
+  // 🔵 Mover el mapa a la primera coincidencia
+  if(matches[0].map){
+    updateMap(matches[0].map);
+  }
+}
+
+/* ------------------ Eventos ------------------ */
+
+document.getElementById('searchBtn')
+  .addEventListener('click', ()=> search(qInput.value));
+
+qInput.addEventListener('keydown', e=>{
+  if(e.key==='Enter') search(qInput.value);
+});
+
+/* ------------------ Reloj ------------------ */
+function updateClock(){
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+}
+setInterval(updateClock,1000); updateClock();
+
+/* ------------------ Banners ------------------ */
+function populateBanner(bannerId, images){
+  const slides = document.getElementById(bannerId).querySelector('.slides');
+  slides.innerHTML = '';
+  images.forEach((src,i)=>{
+    const img = document.createElement('img');
+    img.src = src;
+    if(i===0) img.classList.add('active');
+    slides.appendChild(img);
+  });
+}
+
+populateBanner('side-left', ['ima/IMG2.jpeg','ima/IMG3.jpeg']);
+populateBanner('side-right', ['ima/IMG1.jpeg','ima/IMG2.jpeg']);
+
+function startBannerSlideshow(bannerId, interval=3000){
+  setInterval(()=>{
+    const imgs = document.getElementById(bannerId).querySelectorAll('.slides img');
+    if(imgs.length<=1) return;
+    let i = [...imgs].findIndex(img=>img.classList.contains('active'));
+    imgs[i].classList.remove('active');
+    i = (i+1)%imgs.length;
+    imgs[i].classList.add('active');
+  }, interval);
+}
+startBannerSlideshow('side-left');
+startBannerSlideshow('side-right');
+
+/* ------------------ Menú ------------------ */
+const hamb = document.getElementById('hamb');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+
+function toggleMenu(open){
+  menu.classList.toggle('open', open);
+  overlay.classList.toggle('show', open);
+}
+
+hamb.addEventListener('click', ()=> toggleMenu(!menu.classList.contains('open')));
+overlay.addEventListener('click', ()=> toggleMenu(false));
+
+</script>
+</body>
+</html>
