@@ -3,8 +3,10 @@
 <head>
   <link rel="icon" href="ima/icono1.png" type="image/png">
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
   <title>Buscar Rutas - Transporte</title>
+
   <style>
     :root{
       --primary:#378f04b0;
@@ -15,8 +17,19 @@
       --muted:#6b7280;
       --radius:12px;
     }
-    *{box-sizing:border-box}
-    body{font-family:Inter, system-ui, -apple-system, Arial; margin:0; background:var(--bg); color:var(--text);}
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Inter, system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:var(--text);
+      padding:0 140px 40px 140px;
+    }
+
+    @media(max-width:900px){
+      body{padding:0 16px 70px 16px;} /* más cómodo en móvil */
+    }
 
     header{
       background:linear-gradient(90deg,var(--primary),#0a93d0);
@@ -27,13 +40,22 @@
       gap:12px;
       position:sticky;
       top:0;
-      z-index:900
+      z-index:900;
     }
+
     .hamburger{font-size:26px; cursor:pointer;}
     .brand{font-weight:800; font-size:18px}
-    .clock{margin-left:auto; font-weight:700; background:rgba(255,255,255,0.12); padding:6px 10px; border-radius:10px}
+    .clock{
+      margin-left:auto;
+      font-weight:700;
+      background:rgba(255,255,255,0.12);
+      padding:6px 10px;
+      border-radius:10px;
+    }
 
-    .side-banner{position:fixed; top:0; right:0; width:140px; height:100vh; overflow:hidden; border-left:6px solid rgba(0,0,0,0.04); background:#fff; z-index:100}
+    /* BANNERS */
+/* ---- BANNERS LATERALES ---- */
+.side-banner{position:fixed; top:0; right:0; width:140px; height:100vh; overflow:hidden; border-left:6px solid rgba(0,0,0,0.04); background:#fff; z-index:100}
     .side-banner-left{left:0; right:auto; border-left:0; border-right:6px solid rgba(0,0,0,0.04)}
     .side-banner .slides img{width:100%; height:100%; object-fit:cover; position:absolute; opacity:0; transition:opacity .6s}
     .side-banner .slides img.active{opacity:1}
@@ -58,7 +80,76 @@
     .route h3{margin:0 0 6px}
     .meta{font-size:13px; color:var(--muted)}
 
-    /* MAPA */
+    .container{max-width:980px; margin:18px auto;}
+    .card{background:var(--card); padding:18px; border-radius:var(--radius); box-shadow:0 8px 30px rgba(11,127,191,0.06)}
+
+    /* BUSCADOR */
+    .search-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap; /* HACE QUE SE ACOMODE PERFECTO EN CELULAR */
+    }
+
+    .search-row input[type=text]{
+      flex:1;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6eef8;
+      font-size:16px;
+      min-width:200px;
+    }
+
+    .search-row button{
+      background:var(--primary);
+      color:#fff;
+      border:none;
+      padding:12px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      min-width:110px;
+    }
+
+    select{
+      padding:10px;
+      border-radius:10px;
+      border:1px solid #e6eef8;
+      font-size:15px;
+      min-width:180px;
+    }
+
+    /* MOBILE: selects en columna */
+    @media(max-width:600px){
+      .flex{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+      select, .search-row button{
+        width:100%;
+      }
+    }
+
+    .info-box{
+      margin-top:14px;
+      padding:12px;
+      border-radius:10px;
+      background:#fbfcff;
+      border:1px solid #eef6fb;
+    }
+
+    .results{margin-top:16px;}
+    .route{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #eef6fb;
+      margin-bottom:10px;
+      background:white;
+    }
+
+    /* MAPA RESPONSIVO */
     #map{
       height:450px;
       width:100%;
@@ -67,19 +158,56 @@
       margin-top:16px;
     }
 
-    .menu{position:fixed; left:0; top:0; bottom:0; width:260px; background:#fff; padding:18px; transform:translateX(-110%); transition:transform .28s; z-index:1000; box-shadow:0 30px 60px rgba(2,6,23,0.12)}
+    @media(max-width:600px){
+      #map{height:420px;}
+    }
+
+    /* MENÚ LATERAL */
+    .menu{
+      position:fixed;
+      left:0;
+      top:0;
+      bottom:0;
+      width:260px;
+      background:#fff;
+      padding:18px;
+      transform:translateX(-110%);
+      transition:transform .28s;
+      z-index:1000;
+      box-shadow:0 30px 60px rgba(2,6,23,0.12);
+    }
     .menu.open{transform:translateX(0)}
-    .menu a{display:block; padding:10px 6px; color:var(--text); text-decoration:none; font-weight:600}
+    .menu a{
+      display:block;
+      padding:10px 6px;
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+    }
 
-    .overlay{position:fixed; inset:0; background:rgba(0,0,0,0.35); display:none; z-index:999}
-    .overlay.show{display:block}
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.35);
+      display:none;
+      z-index:999;
+    }
+    .overlay.show{display:block;}
 
-    footer{max-width:980px; margin:12px auto; color:var(--muted); font-size:13px; text-align:center}
-    select{padding:8px; border-radius:8px; border:1px solid #e6eef8}
+    footer{
+      max-width:980px;
+      margin:20px auto;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      padding-bottom:60px;
+    }
   </style>
 </head>
+
 <body>
 
+  <!-- MENU LATERAL -->
   <div class="menu" id="menu">
     <strong>Menú</strong>
     <a class="tab" href="buzon.html">📬 Buzón</a>
@@ -87,53 +215,61 @@
     <a href="escuelas.html">🏫 Escuelas</a>
     <a href="contacto.html">📞 Contacto</a>
   </div>
+
   <div class="overlay" id="overlay"></div>
 
+  <!-- HEADER -->
   <header>
     <div class="hamburger" id="hamb">☰</div>
     <div class="brand">Rutas MX</div>
     <div class="clock" id="clock">--:--:--</div>
   </header>
 
+  <!-- BANNERS -->
   <div class="side-banner side-banner-left" id="side-left">
     <div class="slides"></div>
-  </div>
-  <div class="side-banner" id="side-right">
+</div>
+<div class="side-banner side-banner-right" id="side-right">
     <div class="slides"></div>
-  </div>
+</div>
 
+  <!-- CONTENIDO -->
   <div class="container">
     <div class="card" id="buscar">
       <h2>Buscar rutas de transporte</h2>
-      <p class="info-box">Escribe el nombre de la ruta o una parada. Ej.: <em>Ruta 5</em> o <em>Terminal Central</em></p>
+
+     <p class="info-box">Escribe el nombre de la ruta o una parada. Ej.: <em>Ruta 5</em> o <em>Terminal Central</em></p>
 
       <div class="search-row">
-        <input type="text" id="q" placeholder="Escribe ruta o parada..." />
+        <input type="text" id="q" placeholder="Escribe ruta o parada...">
         <button id="searchBtn">Buscar</button>
-        <div style="margin-left:8px" class="flex">
+
+        <div class="flex" style="margin-left:8px;">
           <select id="turnoSelect">
             <option value="all">Todos los turnos</option>
             <option value="matutino">Matutino</option>
             <option value="vespertino">Vespertino</option>
           </select>
+
           <select id="rutaPick">
             <option value="">-- Selecciona ruta --</option>
           </select>
+
           <button id="showRouteBtn">Mostrar</button>
         </div>
       </div>
 
       <div class="results" id="results">
-        <div class="meta" style="margin-top:10px">Sin resultados aún. Realiza una búsqueda.</div>
+        <div class="meta" style="margin-top:10px;">
+          Sin resultados aún. Realiza una búsqueda.
+        </div>
       </div>
 
       <div id="map"></div>
-
     </div>
   </div>
 
   <footer>© PROTECTO SCHOOL RIDE — PROCEDIMIENTO Y TRABAJO BASE HTML.</footer>
-
 <script>
 /* ---------------- RUTAS NORMALIZADAS ---------------- */
 
@@ -162,52 +298,56 @@ const ROUTES = [
 
 /* ---------------- MAPA ---------------- */
 
-let map, geocoder, markers=[], polyline=null;
-const colors = ["#0066ff","#ff3b30","#ff9500","#34c759","#5856d6","#ff2d55","#5ac8fa","#4cd964"];
+let map, geocoder, markers = [], polyline = null;
+const resultsEl = document.getElementById('results');
 
 function initMap(){
   map = new google.maps.Map(document.getElementById("map"), {
     center:{lat:27.476, lng:-99.55},
-    zoom:12
+    zoom:12,
+    mapTypeControl:true,
+    streetViewControl:true
   });
   geocoder = new google.maps.Geocoder();
   populateRouteSelector();
 }
 
+/* Geocode con Promise */
 function geocode(address){
   return new Promise(resolve=>{
-    geocoder.geocode({address: address + " Nuevo Laredo"}, (results, status)=>{
-      if(status==="OK" && results?.[0]) resolve(results[0].geometry.location);
+    geocoder.geocode({ address: address + " Nuevo Laredo" }, (results, status)=>{
+      if(status === "OK" && results[0]) resolve(results[0].geometry.location);
       else resolve(null);
     });
   });
 }
 
 async function drawRouteById(id){
-  const r = ROUTES.find(x=>x.id===id);
+  const r = ROUTES.find(x=>x.id === id);
   if(!r) return alert("Ruta no encontrada");
 
+  // limpiar anteriores
   if(polyline) polyline.setMap(null);
-  markers.forEach(m=>m.setMap(null));
-  markers=[];
+  markers.forEach(m => m.setMap(null));
+  markers = [];
 
   const coords = [];
-  for(const s of r.stops){
-    const loc = await geocode(s);
+  for(const stop of r.stops){
+    const loc = await geocode(stop);
     if(loc){
-      coords.push({lat:loc.lat(), lng:loc.lng()});
-      const m = new google.maps.Marker({position:loc, map, title:s});
+      coords.push({ lat: loc.lat(), lng: loc.lng() });
+      const m = new google.maps.Marker({ position: loc, map, title: stop });
       markers.push(m);
     }
   }
 
-  if(coords.length>=2){
+  if(coords.length >= 2){
     polyline = new google.maps.Polyline({
       path: coords,
-      geodesic:true,
+      geodesic: true,
       strokeColor: (r.turno === "matutino") ? "#0066FF" : "#FF3333",
-      strokeWeight:5,
-      strokeOpacity:0.95
+      strokeWeight: 5,
+      strokeOpacity: 0.95
     });
     polyline.setMap(map);
     map.panTo(coords[0]);
@@ -223,12 +363,9 @@ async function drawRouteById(id){
   `;
 }
 
-function hashCode(str){ let h=0; for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i); return h; }
-
-/* ---------------- BÚSQUEDA ---------------- */
+/* ---------------- UI / BÚSQUEDA ---------------- */
 
 const qInput = document.getElementById('q');
-const resultsEl = document.getElementById('results');
 
 function populateRouteSelector(){
   const sel = document.getElementById('rutaPick');
@@ -350,6 +487,7 @@ overlay.addEventListener('click', ()=> toggleMenu(false));
 
 </script>
 
+<!-- Google Maps API (con tu API KEY) -->
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC13gZAM4OVtdJCkNvbcRDSdCDBY4xNwhc&callback=initMap&libraries=places"></script>
 
 </body>
